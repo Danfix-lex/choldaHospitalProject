@@ -1,0 +1,108 @@
+package services;
+
+import models.User;
+import exception.DuplicateEmailException;
+import exception.InvalidCredentialsException;
+import exception.InvalidEmailFormatException;
+import models.Patient;
+import interfaces.PatientsActivities;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class PatientsService implements PatientsActivities {
+
+    private List<Patient> patients;
+    private int id = 1000;
+
+    public PatientsService() {
+        patients = new ArrayList<>();
+
+    }
+    public int getPatientSize() {
+
+        return patients.size();
+    }
+
+    public boolean isEmailTaken(String email) {
+
+        return patients.stream().anyMatch(p -> p.getEmail().equals(email));
+    }
+
+
+
+    @Override
+    public void registerUser(User user) {
+        if (isEmailTaken(user.getEmail())) {
+            throw new DuplicateEmailException("User's email already exists!");
+        }
+        if (!UserValidation.isEmailValid(user.getEmail())) {
+            throw new InvalidEmailFormatException("Invalid Email Format!");
+        }
+        else if (user instanceof Patient newPatient) {
+            String newId = "PAT" + id;
+            newPatient.setPatientsId(newId);
+            patients.add(newPatient);
+            this.id ++;
+        }
+
+
+
+    }
+
+    public User loginUser(String email, String password) {
+        for (Patient myPatient : patients) {
+            if (myPatient.getEmail().equals(email) && myPatient.getPassword().equals(password)) {
+                return myPatient;
+            }
+
+        }
+
+        throw new InvalidCredentialsException("Invalid credentials!");
+    }
+
+
+    @Override
+    public void bookAppointment() {
+
+    }
+
+    @Override
+    public void viewAvailableDoctors() {
+
+    }
+
+
+
+    @Override
+    public void updateProfile() {
+
+
+    }
+
+    @Override
+    public void viewAppointment() {
+
+    }
+
+
+    @Override
+    public void viewUserProfile() {
+
+    }
+
+    @Override
+    public void viewAvailableUsers() {
+
+    }
+
+    @Override
+    public void updateMedicalHistory() {
+
+    }
+
+    @Override
+    public void viewMedicalHistory() {
+
+    }
+}
