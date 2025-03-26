@@ -3,8 +3,11 @@ package services;
 import models.Doctor;
 import exception.DuplicateEmailException;
 import exception.InvalidCredentialsException;
+import models.MedicalHistory;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -100,6 +103,35 @@ public class DoctorsServiceTest {
 
         Exception invalidCredentials = assertThrows(InvalidCredentialsException.class, () -> myDoctorsService.loginUser("yahoo@gmail.com", "0123"));
         assertEquals("Invalid credentials!", invalidCredentials.getMessage());
+    }
+    @Test
+    public void test_Doctor_Creates_Patients_Medical_History(){
+        Doctor doctor = new Doctor("firstName1", "lastName1", "yahoo@gmail.com", "address", "city", "1234", "Radiologist");
+        myDoctorsService.registerUser(doctor);
+        assertEquals(1, myDoctorsService.getDoctorSize());
+
+
+    }
+
+    @Test
+    public void testGetMedicalHistoriesValidDoctor() {
+        Doctor doctor = new Doctor("firstName1", "lastName1", "yahoo@gmail.com", "address", "city", "1234", "Radiologist");
+        myDoctorsService.registerUser(doctor);
+        assertEquals(1, myDoctorsService.getDoctorSize());
+        List<MedicalHistory> histories = myDoctorsService.getMedicalHistories("DOC1000");
+        assertNotNull(histories.toString(), "Medical history list should not be null.");
+        assertEquals(0, histories.size());
+    }
+
+    @Test
+    public void testGetMedicalHistoriesInvalidDoctor() {
+        Doctor doctor = new Doctor("firstName1", "lastName1", "yahoo@gmail.com", "address", "city", "1234", "Radiologist");
+        myDoctorsService.registerUser(doctor);
+        assertEquals(1, myDoctorsService.getDoctorSize());
+        Exception exception = assertThrows(InvalidCredentialsException.class, () -> {
+            myDoctorsService.getMedicalHistories("DOC9999");
+        });
+        assertEquals("Invalid credentials!", exception.getMessage(), "Invalid credentials!");
     }
 
 

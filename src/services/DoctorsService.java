@@ -1,6 +1,7 @@
 package services;
 
 import models.Doctor;
+import models.MedicalHistory;
 import models.User;
 import exception.DuplicateEmailException;
 import exception.InvalidCredentialsException;
@@ -44,4 +45,15 @@ public class DoctorsService {
         }
         throw new InvalidCredentialsException("Invalid credentials!");
     }
+
+    public List<MedicalHistory> getMedicalHistories(String doctorsId) {
+        List<MedicalHistory> medicalHistories = new ArrayList<>();
+        for (Doctor doctor : doctors) {
+            if (doctor.getDoctorsId().equals(doctorsId)) {
+                return medicalHistories;
+            }
+        }
+        throw new InvalidCredentialsException("Invalid credentials!");
+    }
+
 }
