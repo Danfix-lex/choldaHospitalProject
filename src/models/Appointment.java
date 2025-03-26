@@ -1,15 +1,25 @@
 package models;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.util.Locale;
 
 public class Appointment {
+    private static final DateTimeFormatter APPOINTMENT_FORMATTER =
+            new DateTimeFormatterBuilder()
+                    .parseCaseInsensitive()
+                    .appendPattern("dd-MM-yyyy h:mm a")
+                    .toFormatter(Locale.ENGLISH);
+
     private LocalDateTime appointmentTime;
     private Patient patient;
     private String doctorsId;
     private String description;
 
-    public Appointment(LocalDateTime appointmentTime, Patient patient, String doctorsId, String description) {
-        this.appointmentTime = appointmentTime;
+    public Appointment(String appointmentDateTime, Patient patient, String doctorsId, String description) {
+        this.appointmentTime = LocalDateTime.parse(appointmentDateTime, APPOINTMENT_FORMATTER);
         this.patient = patient;
         this.doctorsId = doctorsId;
         this.description = description;
