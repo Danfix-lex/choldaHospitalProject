@@ -3,11 +3,14 @@ package models;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
-public class Patient extends User {
+import models.MedicalHistory;
+
+public class  Patient extends User {
     private LocalDate dateOfBirth;
     private String patientsId;
-
+    private List<MedicalHistory> medicalHistories;
 
 
     public Patient(String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String address, String password) {
