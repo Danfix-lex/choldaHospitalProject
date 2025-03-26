@@ -1,5 +1,6 @@
 package services;
 
+import models.MedicalHistory;
 import models.User;
 import exception.DuplicateEmailException;
 import exception.InvalidCredentialsException;
@@ -28,7 +29,6 @@ public class PatientsService implements PatientsActivities {
 
         return patients.stream().anyMatch(p -> p.getEmail().equals(email));
     }
-
 
 
     @Override

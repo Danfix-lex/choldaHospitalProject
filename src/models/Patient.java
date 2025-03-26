@@ -3,14 +3,14 @@ package models;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
-
 import models.MedicalHistory;
 
 public class  Patient extends User {
     private LocalDate dateOfBirth;
     private String patientsId;
-    private List<MedicalHistory> medicalHistories;
+    private List<MedicalHistory> medicalHistories = new ArrayList<>();
 
 
     public Patient(String firstName, String lastName, String email, String phoneNumber, String dateOfBirth, String address, String password) {
@@ -29,5 +29,13 @@ public class  Patient extends User {
     }
     public  void setPatientsId(String patientsId) {
         this.patientsId = patientsId;
+    }
+
+    public List<MedicalHistory> getMedicalHistories() {
+        return medicalHistories;
+    }
+
+    public void setMedicalHistories(List<MedicalHistory> medicalHistories) {
+        this.medicalHistories = medicalHistories;
     }
 }
