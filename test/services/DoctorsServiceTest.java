@@ -16,7 +16,7 @@ public class DoctorsServiceTest {
         myDoctorsService = new DoctorsService();
     }
     @Test
-    public void testDoctorListIsNotEmpty() {
+    public void testDoctorListIsEmpty() {
         assertEquals(0, myDoctorsService.getDoctorSize());
     }
     @Test

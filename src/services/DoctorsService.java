@@ -15,9 +15,9 @@ public class DoctorsService {
     public DoctorsService() {
         doctors = new ArrayList<>();
     }
+
     public int getDoctorSize() {
         return doctors.size();
-
     }
 
     public void registerUser(User user) {
