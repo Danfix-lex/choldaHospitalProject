@@ -8,33 +8,23 @@ public class MedicalHistory {
     private boolean treatmentStatus;
     private boolean dischargeStatus;
 
-    public MedicalHistory() {}
+    public MedicalHistory(String description, boolean treatmentStatus, boolean dischargeStatus) {
+        this.dateTime = LocalDateTime.now();
+        this.description = description;
+        this.treatmentStatus = treatmentStatus;
+        this.dischargeStatus = dischargeStatus;
+    }
 
     public LocalDateTime getDateTime() {
         return dateTime;
-    }
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
     }
 
     public String getDescription() {
         return description;
     }
 
-    public void setTreatmentStatus(boolean message) {
-        this.treatmentStatus = message;
-    }
-
     public boolean isTreatmentStatus() {
         return treatmentStatus;
-    }
-
-    public void setDischargeStatus(boolean message) {
-        this.dischargeStatus = message;
     }
 
     public boolean isDischargeStatus() {

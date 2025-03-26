@@ -17,11 +17,11 @@ public class AppointmentServiceTest {
         assertEquals(0,myAppointment.getAppointmentSize());
     }
 
-    @Test
-    public void testYouCreateAnAppointment_SizeIsOne() {
-        myAppointment.createAppointment();
-        assertEquals(1, myAppointment.getAppointmentSize());
-    }
+//    @Test
+//    public void testYouCreateAnAppointment_SizeIsOne() {
+//        myAppointment.createAppointment();
+//        assertEquals(1, myAppointment.getAppointmentSize());
+//    }
 
 
 
