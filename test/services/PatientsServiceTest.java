@@ -1,8 +1,12 @@
 package services;
 
+import exception.UnavailableDoctorException;
+import exception.UnregisteredDoctorException;
 import exception.InvalidEmailFormatException;
 import exception.DuplicateEmailException;
 import exception.InvalidCredentialsException;
+import models.Appointment;
+import models.Doctor;
 import org.junit.Before;
 import org.junit.Test;
 import models.Patient;
@@ -10,11 +14,14 @@ import models.Patient;
 import static org.junit.Assert.*;
 
 public class PatientsServiceTest {
-    PatientsService myPatientsService = new PatientsService();
+    DoctorsService myDoctorsService = new DoctorsService();
+    PatientsService myPatientsService = new PatientsService(myDoctorsService);
+
+
 
     @Before
     public void setUp() {
-        myPatientsService = new PatientsService();
+        myPatientsService = new PatientsService(myDoctorsService);
 
     }
 
@@ -114,6 +121,72 @@ public class PatientsServiceTest {
         Patient patientLoggedIn = (Patient) myPatientsService.loginUser("email@gmail.com", "0000");
         assertNotNull(patientLoggedIn);
         assertEquals("firstName1", patientLoggedIn.getFirstName());
+    }
+
+    @Test
+    public void testThatPatientCanBookAppointment() {
+        Doctor doctor = new Doctor("firstName3", "lastName3", "email.@gmail.com", "address", "city", "0000", "LabTechnician");
+        myDoctorsService.registerUser(doctor);
+
+        Patient patient = new Patient("firstName1", "lastName1", "email@gmail.com", "08025473892", "02-12-2024", "Abuja", "0000");
+        myPatientsService.registerUser(patient);
+        Patient currentPatient = (Patient) myPatientsService.loginUser("email@gmail.com","0000");
+        Appointment currrentAppointment = myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient, "DOC1000", "Malaria parasite");
+
+        assertEquals("firstName1", currrentAppointment.getPatient().getFirstName());
+    }
+
+    @Test
+    public void testThatYouCanFindDoctorById(){
+        DoctorsService myDoctorsService = new DoctorsService();
+        Doctor doctor = new Doctor("firstName3", "lastName3", "email.@gmail.com", "address", "city", "0000", "LabTechnician");
+        myDoctorsService.registerUser(doctor);
+        assertEquals("DOC1000",doctor.getDoctorsId());
+
+        Doctor currentDoctor =  myDoctorsService.findDoctorById("DOC1000");
+        assertEquals("firstName3", currentDoctor.getFirstName());
+
+
+
+    }
+    @Test
+    public void testThrowsUnregisteredDoctorExceptionIfDoctorIsNotAvailableOrIdIsNotValid() {
+        Patient patient = new Patient("firstName1", "lastName1", "email@gmail.com", "08025473892", "02-12-2024", "Abuja", "0000");
+        myPatientsService.registerUser(patient);
+        Patient currentPatient = (Patient) myPatientsService.loginUser("email@gmail.com","0000");
+
+        Doctor doctor = new Doctor("firstName3", "lastName3", "email.@gmail.com", "address", "city", "0000", "LabTechnician");
+        myDoctorsService.registerUser(doctor);
+        assertEquals(1,myDoctorsService.getDoctorSize());
+
+        assertThrows(UnregisteredDoctorException.class, () ->  myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient, "DOC100", "Malaria parasite"));
+        UnregisteredDoctorException checkDoctorsAvailability = assertThrows(UnregisteredDoctorException.class, () -> myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient, "777", "Malaria parasite"));
+        assertEquals("Doctor not found!", checkDoctorsAvailability.getMessage());
+
+    }
+
+    @Test
+    public void testThatExceptionIsThrownIfYouBookAnUnavailableDoctor() {
+        Patient patient = new Patient("firstName1", "lastName1", "email@gmail.com", "08025473892", "02-12-2024", "Abuja", "0000");
+        myPatientsService.registerUser(patient);
+        Patient currentPatient = (Patient) myPatientsService.loginUser("email@gmail.com","0000");
+
+        Patient patient2 = new Patient("firstName", "lastName", "email2@gmail.com", "08025473892", "02-12-2024", "Abuja", "0000");
+        myPatientsService.registerUser(patient2);
+        Patient currentPatient2 = (Patient) myPatientsService.loginUser("email2@gmail.com","0000");
+
+
+        Doctor doctor = new Doctor("firstName3", "lastName3", "email.@gmail.com", "address", "city", "0000", "LabTechnician");
+        myDoctorsService.registerUser(doctor);
+
+        Appointment firstAppointment = myPatientsService.bookAppointment("02-03-2023 9:30 am",currentPatient, "DOC1000", "Malaria parasite");
+//        Appointment firstAppointment2 = myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient2, "DOC1000", "Malaria parasite");
+//        System.out.println(firstAppointment.getAppointmentTime());
+//        System.out.println(firstAppointment2.getAppointmentTime());
+
+
+        assertThrows(UnavailableDoctorException.class, () ->  myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient2, "DOC1000", "Malaria parasite"));
+
     }
 
 }

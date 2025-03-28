@@ -5,7 +5,7 @@ import exception.WeakPassWordException;
 import java.util.regex.Pattern;
 
 
-public class UserValidation {
+public class UserValidation{
     private static final String EMAIL_VALIDATOR = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$";
     private static final Pattern EMAIL_VALIDATOR_PATTERN = Pattern.compile(EMAIL_VALIDATOR);
 
