@@ -7,6 +7,7 @@ import models.MedicalHistory;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -132,6 +133,20 @@ public class DoctorsServiceTest {
             myDoctorsService.getMedicalHistories("DOC9999");
         });
         assertEquals("Invalid credentials!", exception.getMessage(), "Invalid credentials!");
+    }
+
+    @Test
+    public void testGetDoctorMethodReturnsListOfDoctors() {
+        Doctor doctor = new Doctor("firstName1", "lastName1", "yahoo@gmail.com", "address", "city", "1234", "Radiologist");
+        Doctor doctor2 = new Doctor("firstName", "lastName1", "hoo@gmail.com", "address", "city", "1234", "Radiologist");
+        myDoctorsService.registerUser(doctor);
+        myDoctorsService.registerUser(doctor2);
+        assertEquals(Arrays.asList(doctor, doctor2), myDoctorsService.getDoctors());
+        System.out.println(myDoctorsService.getDoctors());
+
+
+
+
     }
 
 

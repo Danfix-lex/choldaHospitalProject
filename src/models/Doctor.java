@@ -8,12 +8,15 @@ public class Doctor extends User {
     private String specialization;
     private String doctorsId;
     private List<MedicalHistory> medicalHistories;
+    private List<Appointment> appointments;
 
     public Doctor(String firstName, String lastName, String email, String phoneNumber, String address, String password,  String specialization) {
         super(firstName, lastName, email, phoneNumber, address, password);
         this.specialization = specialization;
         this.doctorsId = doctorsId;
         this.medicalHistories = new ArrayList<>();
+        this.appointments = new ArrayList<>();
+
     }
     public  String getSpecialization() {
         return specialization;

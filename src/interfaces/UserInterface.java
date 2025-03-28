@@ -1,4 +1,5 @@
 package interfaces;
+import models.Doctor;
 import models.User;
 
 public interface UserInterface {
@@ -10,6 +11,7 @@ public interface UserInterface {
     void viewAvailableUsers();
     void updateMedicalHistory();
     void viewMedicalHistory();
+//    Doctor findDoctorById(int id);
 
 
 }

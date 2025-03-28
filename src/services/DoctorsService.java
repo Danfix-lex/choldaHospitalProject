@@ -56,4 +56,20 @@ public class DoctorsService {
         throw new InvalidCredentialsException("Invalid credentials!");
     }
 
+    public List <Doctor> getDoctors() {
+        return doctors;
+    }
+    public Doctor findDoctorById(String doctorsId) {
+        for (Doctor doctor : doctors) {
+            if (doctor.getDoctorsId().equals(doctorsId)) {
+                return doctor;
+            }
+        }
+       return null;
+    }
+
+    public String toString(){
+        return doctors.toString();
+    }
+
 }

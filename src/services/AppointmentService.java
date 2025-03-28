@@ -23,4 +23,5 @@ public class AppointmentService {
         appointments.add(appointment);
 
     }
+
 }
