@@ -181,9 +181,6 @@ public class PatientsServiceTest {
 
         Appointment firstAppointment = myPatientsService.bookAppointment("02-03-2023 9:30 am",currentPatient, "DOC1000", "Malaria parasite");
 //        Appointment firstAppointment2 = myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient2, "DOC1000", "Malaria parasite");
-//        System.out.println(firstAppointment.getAppointmentTime());
-//        System.out.println(firstAppointment2.getAppointmentTime());
-
 
         assertThrows(UnavailableDoctorException.class, () ->  myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient2, "DOC1000", "Malaria parasite"));
 
