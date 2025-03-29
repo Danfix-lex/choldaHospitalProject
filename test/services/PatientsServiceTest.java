@@ -178,9 +178,7 @@ public class PatientsServiceTest {
         Doctor doctor = new Doctor("firstName3", "lastName3", "email.@gmail.com", "address", "city", "0000", "LabTechnician");
         myDoctorsService.registerUser(doctor);
 
-        Appointment firstAppointment = myPatientsService.bookAppointment("02-03-2023 9:30 am",currentPatient, "DOC1000", "Malaria parasite");
-//        Appointment firstAppointment2 = myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient2, "DOC1000", "Malaria parasite");
-
+        myPatientsService.bookAppointment("02-03-2023 9:30 am",currentPatient, "DOC1000", "Malaria parasite");
         assertThrows(UnavailableDoctorException.class, () ->  myPatientsService.bookAppointment("02-03-2023 9:30 am", currentPatient2, "DOC1000", "Malaria parasite"));
 
     }
