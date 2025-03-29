@@ -70,18 +70,14 @@ public class PatientsService implements PatientsActivities {
     @Override
     public Appointment bookAppointment(String appointmentDateTime, Patient patient, String doctorsId, String description) {
         Doctor doctor = doctorsService.findDoctorById(doctorsId);
-        if (doctor != null) {
-            for (Appointment appointment : appointments) {
-                if (!appointment.getAppointmentTime().toString().equalsIgnoreCase(appointmentDateTime)) {
-                    Appointment currentAppointment = new Appointment(appointmentDateTime, patient, doctorsId, description);
-                    appointments.add(currentAppointment);
-                    return appointment;
-                }
-
+        if (doctor != null ) {
+            if(doctor.getIsAvailable()){
+                Appointment currentAppointment = new Appointment(appointmentDateTime, patient, doctorsId, description);
+                appointments.add(currentAppointment);
+                doctor.makeUnavailable();
+                return currentAppointment;
             }
-
-            throw new UnavailableDoctorException("Doctor is not available!");
-//
+            throw new UnavailableDoctorException("Doctor is currently unavailable!");
 //            if(!appointment.getAppointmentTime().toString().equalsIgnoreCase(appointmentDateTime)) {
 //                appointments.add(appointment);
 //                return appointment;
