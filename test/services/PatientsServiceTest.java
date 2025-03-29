@@ -18,7 +18,6 @@ public class PatientsServiceTest {
     PatientsService myPatientsService = new PatientsService(myDoctorsService);
 
 
-
     @Before
     public void setUp() {
         myPatientsService = new PatientsService(myDoctorsService);

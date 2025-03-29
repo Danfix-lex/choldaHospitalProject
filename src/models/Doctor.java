@@ -9,6 +9,8 @@ public class Doctor extends User {
     private String doctorsId;
     private List<MedicalHistory> medicalHistories;
     private List<Appointment> appointments;
+    private boolean isAvailable;
+
 
     public Doctor(String firstName, String lastName, String email, String phoneNumber, String address, String password,  String specialization) {
         super(firstName, lastName, email, phoneNumber, address, password);
@@ -16,7 +18,7 @@ public class Doctor extends User {
         this.doctorsId = doctorsId;
         this.medicalHistories = new ArrayList<>();
         this.appointments = new ArrayList<>();
-
+        this.isAvailable = true;
     }
     public  String getSpecialization() {
         return specialization;
@@ -30,6 +32,13 @@ public class Doctor extends User {
     public void setDoctorsId(String doctorsId) {
         this.doctorsId = doctorsId;
     }
+    public boolean getIsAvailable() {
+        return isAvailable;
+    }
+    public void makeUnavailable() {
+        this.isAvailable = false;
+    }
+    public void makeAvailable(){this.isAvailable = true;}
 
     public void addMedicalHistory(String description, boolean treatmentStatus, boolean medicalHistoryStatus) {
         MedicalHistory history = new MedicalHistory(description, treatmentStatus, medicalHistoryStatus);
